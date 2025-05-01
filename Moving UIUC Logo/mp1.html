@@ -1,0 +1,55 @@
+<!DOCTYPE HTML> 
+<html lang="en"> 
+<head>
+<title>MP1</title>
+<meta charset="utf-8"> 
+</head>
+ 
+<script id="shader-vs" type="x-shader/x-vertex">
+uniform mat4 uMvMatrix;
+uniform mat4 uPMatrix;
+
+attribute vec4 aVertexColor;
+attribute vec3 aVertexPosition;
+
+varying vec4 vColor;
+
+void main(void) {
+    gl_Position = uPMatrix*uMvMatrix*vec4(aVertexPosition, 1.0);
+    vColor = aVertexColor;
+}
+</script>
+  
+<script id="shader-fs" type="x-shader/x-fragment">
+
+#ifdef GL_FRAGMENT_PRECISION_HIGH
+precision highp float;
+#else
+precision mediump float;
+#endif
+
+varying vec4 vColor;
+void main(void) {
+        gl_FragColor = vColor;
+ }
+</script>
+<script src="gl-matrix-min.js"></script> 
+<script src="mp1.js"></script>   
+<body onload="startup();">
+  <canvas id="myGLCanvas" width="500" height="500"></canvas>
+</body>
+
+<p>Animation settings:</p>
+
+<div>
+  <input type="range" id="speed" name="speed" min="0" max="100" value="50">
+  <label for="speed">Animation speed</label>
+</div>
+<div>
+  <input type="range" id="scale" name="scale" min="0" max="100" value="50">
+  <label for="scale">Logo Scale</label>
+</div>
+    <div>
+        <button onclick="randomColoring()">Random Color(click again to disable)</button>
+    </div>
+</html>
